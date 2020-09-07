@@ -10,7 +10,7 @@ architectures:
   - build-on: amd64
 
 apps:
-  gst-test:
+  gst-test-core18:
     command: snap_run.sh $SNAP/usr/bin/gst-launch-1.0
     plugs: [opengl]
     extensions: [gnome-3-28]

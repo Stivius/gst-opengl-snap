@@ -1,0 +1,67 @@
+name: gst-test-core20
+base: core20
+version: '1.0'
+summary: GStreamer OpenGL Snap
+description: Testing GStreamer 1.16.2 OpenGL GTK+ plugin in snap environment
+grade: stable
+confinement: strict
+
+architectures:
+  - build-on: amd64
+
+apps:
+  gst-test-core20:
+    command: bin/desktop-launch $SNAP/usr/bin/gst-launch-1.0
+    plugs: 
+      - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - unity7
+      - gsettings # For desktop theme detection under Wayland session
+      - home
+      - opengl
+
+plugs:
+  gnome-3-28-1804:
+    interface: content
+    target: $SNAP/gnome-platform
+    default-provider: gnome-3-28-1804
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+
+parts:
+  desktop-gnome-platform:
+    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+    source-subdir: gtk
+    plugin: make
+    make-parameters: ["FLAVOR=gtk3"]
+    build-packages:
+      - gcc
+    override-build: |
+      snapcraftctl build
+      mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
+
+  script:
+    plugin: nil
+    stage-packages:
+      - libgstreamer1.0-0
+      - gstreamer1.0-gl
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-alsa
+      - gstreamer1.0-gtk3
+      - gstreamer1.0-libav
+      - gstreamer1.0-pulseaudio
+      - gstreamer1.0-tools
+    after: [desktop-gnome-platform] 
