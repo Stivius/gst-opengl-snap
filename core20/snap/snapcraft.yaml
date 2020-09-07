@@ -41,16 +41,30 @@ plugs:
     default-provider: gtk-common-themes
 
 parts:
+  base:
+    plugin: nil
+    build-packages:
+      - software-properties-common
+
+  g++-8: # Ubuntu 18.04 has outdated gcc so we have to install it from PPA
+    plugin: nil
+    override-pull: |
+      add-apt-repository ppa:ubuntu-toolchain-r/test
+      apt-get update
+      apt-get install -y g++-8
+      update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 90
+      update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 90
+    after: [base]
+
   desktop-gnome-platform:
     source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
     source-subdir: gtk
     plugin: make
     make-parameters: ["FLAVOR=gtk3"]
-    build-packages:
-      - gcc
     override-build: |
       snapcraftctl build
       mkdir -pv $SNAPCRAFT_PART_INSTALL/gnome-platform
+    after: [g++-8]
 
   script:
     plugin: nil
