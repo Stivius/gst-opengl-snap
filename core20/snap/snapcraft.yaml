@@ -23,10 +23,10 @@ apps:
       - opengl
 
 plugs:
-  gnome-3-28-1804:
+  gnome-3-34-1804:
     interface: content
     target: $SNAP/gnome-platform
-    default-provider: gnome-3-28-1804
+    default-provider: gnome-3-34-1804
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
