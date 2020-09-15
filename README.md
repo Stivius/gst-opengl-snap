@@ -9,6 +9,12 @@ To build the following code you need to do the following:
 5. Run `gst-test-coreCORE_VERSION videotestsrc ! glupload ! glfiltercube ! gtkglsink` to test if it's reproducible on your device where `CORE_VERSION` is `18` or `20` depending on your build. If it fails you should get the similar output:
 ```
 Setting pipeline to PAUSED ...
+libGL error: MESA-LOADER: failed to open iris (search paths /snap/gst-test-core20/x2/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: iris
+libGL error: MESA-LOADER: failed to open iris (search paths /snap/gst-test-core20/x2/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: iris
+libGL error: MESA-LOADER: failed to open swrast (search paths /snap/gst-test-core20/x2/gnome-platform/usr/lib/x86_64-linux-gnu/dri)
+libGL error: failed to load driver: swrast
 ERROR: Pipeline doesn't want to pause.
 ERROR: from element /GstPipeline:pipeline0/GstGtkGLSink:gtkglsink0: Failed to initialize OpenGL with Gtk
 Additional debug info:
